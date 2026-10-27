@@ -1,4 +1,5 @@
 # SmartUMKM
+
 - [ ] Dashboard and navigable core module pages in Indonesian using Kinsta colors.
 - [ ] Interactive POS, products, production, finances, customers, employee and reporting views.
 - [ ] Cloud account sign-in and private business storage; clearly separate demo data.

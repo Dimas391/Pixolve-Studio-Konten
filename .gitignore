@@ -15,6 +15,9 @@ dist-ssr
 .tanstack/**
 .nitro
 *.local
+*.db
+*.db-journal
+*.sqlite
 
 # Wrangler / Cloudflare
 .wrangler/

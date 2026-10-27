@@ -33,7 +33,9 @@ function fromSimpleIcons(name: string, Si: IconType) {
     const { size = 24, color = "currentColor", strokeWidth, absoluteStrokeWidth, ...rest } = props;
     void strokeWidth;
     void absoluteStrokeWidth;
-    return <Si ref={ref} size={size} color={color} {...(rest as ComponentPropsWithoutRef<IconType>)} />;
+    return (
+      <Si ref={ref} size={size} color={color} {...(rest as ComponentPropsWithoutRef<IconType>)} />
+    );
   });
   Brand.displayName = name;
   return Brand;
@@ -55,7 +57,13 @@ export const Youtube = fromSimpleIcons("Youtube", SiYoutube);
 
 // Simple Icons carries no mark for these (brand-owner requests): lucide 0.577 glyphs, ISC.
 const LINKEDIN: IconNode = [
-  ["path", { d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z", key: "c2jq9f" }],
+  [
+    "path",
+    {
+      d: "M16 8a6 6 0 0 1 6 6v7h-4v-7a2 2 0 0 0-2-2 2 2 0 0 0-2 2v7h-4v-7a6 6 0 0 1 6-6z",
+      key: "c2jq9f",
+    },
+  ],
   ["rect", { width: "4", height: "12", x: "2", y: "9", key: "mk3on5" }],
   ["circle", { cx: "4", cy: "4", r: "2", key: "bt5ra8" }],
 ];
@@ -95,22 +103,40 @@ export const Chromium = createLucideIcon("chromium", CHROMIUM);
 
 // lucide exposes every icon under three names; keep all three for the restored ones.
 export {
-  Chrome as ChromeIcon, Chrome as LucideChrome,
-  Chromium as ChromiumIcon, Chromium as LucideChromium,
-  Codepen as CodepenIcon, Codepen as LucideCodepen,
-  Codesandbox as CodesandboxIcon, Codesandbox as LucideCodesandbox,
-  Dribbble as DribbbleIcon, Dribbble as LucideDribbble,
-  Facebook as FacebookIcon, Facebook as LucideFacebook,
-  Figma as FigmaIcon, Figma as LucideFigma,
-  Framer as FramerIcon, Framer as LucideFramer,
-  Github as GithubIcon, Github as LucideGithub,
-  Gitlab as GitlabIcon, Gitlab as LucideGitlab,
-  Instagram as InstagramIcon, Instagram as LucideInstagram,
-  Linkedin as LinkedinIcon, Linkedin as LucideLinkedin,
-  Pocket as PocketIcon, Pocket as LucidePocket,
-  Slack as SlackIcon, Slack as LucideSlack,
-  Trello as TrelloIcon, Trello as LucideTrello,
-  Twitch as TwitchIcon, Twitch as LucideTwitch,
-  Twitter as TwitterIcon, Twitter as LucideTwitter,
-  Youtube as YoutubeIcon, Youtube as LucideYoutube,
+  Chrome as ChromeIcon,
+  Chrome as LucideChrome,
+  Chromium as ChromiumIcon,
+  Chromium as LucideChromium,
+  Codepen as CodepenIcon,
+  Codepen as LucideCodepen,
+  Codesandbox as CodesandboxIcon,
+  Codesandbox as LucideCodesandbox,
+  Dribbble as DribbbleIcon,
+  Dribbble as LucideDribbble,
+  Facebook as FacebookIcon,
+  Facebook as LucideFacebook,
+  Figma as FigmaIcon,
+  Figma as LucideFigma,
+  Framer as FramerIcon,
+  Framer as LucideFramer,
+  Github as GithubIcon,
+  Github as LucideGithub,
+  Gitlab as GitlabIcon,
+  Gitlab as LucideGitlab,
+  Instagram as InstagramIcon,
+  Instagram as LucideInstagram,
+  Linkedin as LinkedinIcon,
+  Linkedin as LucideLinkedin,
+  Pocket as PocketIcon,
+  Pocket as LucidePocket,
+  Slack as SlackIcon,
+  Slack as LucideSlack,
+  Trello as TrelloIcon,
+  Trello as LucideTrello,
+  Twitch as TwitchIcon,
+  Twitch as LucideTwitch,
+  Twitter as TwitterIcon,
+  Twitter as LucideTwitter,
+  Youtube as YoutubeIcon,
+  Youtube as LucideYoutube,
 };

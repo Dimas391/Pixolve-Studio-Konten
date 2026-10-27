@@ -1,10 +1,5 @@
 export type ContentStatus =
-  | "idea"
-  | "scripting"
-  | "in_production"
-  | "pending_approval"
-  | "scheduled"
-  | "published";
+  "idea" | "scripting" | "in_production" | "pending_approval" | "scheduled" | "published";
 
 export type AssetProvider = "google_drive" | "dropbox" | "canva" | "figma";
 
