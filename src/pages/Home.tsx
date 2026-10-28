@@ -63,12 +63,12 @@ const platforms = [
   "LinkedIn",
 ];
 const statusLabels: Record<ContentStatus, string> = {
-  idea: "Idea",
-  scripting: "Scripting",
-  in_production: "In production",
-  pending_approval: "Needs review",
-  scheduled: "Scheduled",
-  published: "Published",
+  idea: "Ide",
+  scripting: "Naskah",
+  in_production: "Produksi",
+  pending_approval: "Perlu Review",
+  scheduled: "Dijadwalkan",
+  published: "Diterbitkan",
 };
 const statusColors: Record<ContentStatus, string> = {
   idea: "bg-[#F2ECE1] text-[#6B5A4E] border-[#E5DFD5]",
@@ -147,8 +147,8 @@ function PlatformChip({ platform }: { platform: string }) {
 }
 
 function formatDate(date: string | null) {
-  if (!date) return "Not scheduled";
-  return new Intl.DateTimeFormat("en-GB", { day: "2-digit", month: "short" }).format(
+  if (!date) return "Belum dijadwalkan";
+  return new Intl.DateTimeFormat("id-ID", { day: "2-digit", month: "short" }).format(
     new Date(`${date}T12:00:00`),
   );
 }
@@ -220,9 +220,9 @@ export default function Home() {
       invalidate();
       setEditorOpen(false);
       setSelectedContent(content);
-      toast.success(editingId ? "Content updated" : "Idea added to your plan");
+      toast.success(editingId ? "Konten berhasil diperbarui" : "Ide berhasil ditambahkan ke rencana");
     },
-    onError: () => toast.error("Could not save this content yet"),
+    onError: () => toast.error("Gagal menyimpan konten ini"),
   });
   const statusMutation = useMutation({
     mutationFn: ({ id, patch }: { id: string; patch: Partial<ContentForm> }) =>
@@ -230,26 +230,26 @@ export default function Home() {
     onSuccess: (content) => {
       invalidate();
       setSelectedContent(content);
-      toast.success("Workflow updated");
+      toast.success("Alur kerja berhasil diperbarui");
     },
-    onError: () => toast.error("Workflow update failed"),
+    onError: () => toast.error("Gagal memperbarui alur kerja"),
   });
   const deleteMutation = useMutation({
     mutationFn: (id: string) => apiDelete<void>(`/contents/${id}`),
     onSuccess: () => {
       invalidate();
       setSelectedContent(null);
-      toast.success("Content removed");
+      toast.success("Konten berhasil dihapus");
     },
   });
   const commentMutation = useMutation({
     mutationFn: ({ id, message }: { id: string; message: string }) =>
-      apiPost<Content>(`/contents/${id}/comments`, { author: "You", message }),
+      apiPost<Content>(`/contents/${id}/comments`, { author: "Anda", message }),
     onSuccess: (content) => {
       invalidate();
       setSelectedContent(content);
       setCommentText("");
-      toast.success("Note added to the thread");
+      toast.success("Catatan berhasil ditambahkan ke diskusi");
     },
   });
   const assetMutation = useMutation({
@@ -265,9 +265,9 @@ export default function Home() {
         kind: "Photo reference",
         notes: "",
       });
-      toast.success("Asset link saved in MOCKED mode");
+      toast.success("Tautan aset berhasil disimpan");
     },
-    onError: () => toast.error("Add a valid asset link first"),
+    onError: () => toast.error("Masukkan tautan aset yang valid terlebih dahulu"),
   });
 
   const openCreate = (template?: Partial<ContentForm>) => {
@@ -315,11 +315,11 @@ export default function Home() {
     icon: typeof LayoutDashboard;
     count?: number | undefined;
   }[] = [
-    { id: "overview", label: "Overview", icon: LayoutDashboard },
-    { id: "content", label: "Content plan", icon: FileText, count: dashboard?.total_content },
-    { id: "calendar", label: "Calendar", icon: CalendarDays },
-    { id: "media", label: "Media library", icon: Images, count: dashboard?.media_assets },
-    { id: "analytics", label: "Analytics", icon: BarChart3 },
+    { id: "overview", label: "Ringkasan", icon: LayoutDashboard },
+    { id: "content", label: "Rencana Konten", icon: FileText, count: dashboard?.total_content },
+    { id: "calendar", label: "Kalender", icon: CalendarDays },
+    { id: "media", label: "Pustaka Media", icon: Images, count: dashboard?.media_assets },
+    { id: "analytics", label: "Analitik", icon: BarChart3 },
   ];
 
   const navigate = (next: Section) => {
@@ -347,7 +347,7 @@ export default function Home() {
                 data-testid="brand-name"
                 className="font-heading text-[19px] font-black uppercase tracking-[-0.06em]"
               >
-                Union <i className="font-serif font-medium normal-case text-[#FF5722]">studio</i>
+                Pixolve <i className="font-serif font-medium normal-case text-[#FF5722]">Studio</i>
               </span>
             </div>
             <p
@@ -413,19 +413,18 @@ export default function Home() {
                   data-testid="mock-mode-description"
                   className="mt-1 text-xs leading-relaxed text-[#6B5A4E]"
                 >
-                  External asset links are currently{" "}
-                  <strong className="text-[#FF5722]">MOCKED</strong> for this preview.
+                  Tautan aset eksternal saat ini disimulasikan untuk pratinjau ini.
                 </p>
               </div>
             </div>
           </div>
           <button
             data-testid="settings-button"
-            onClick={() => toast.info("Workspace settings are coming next")}
+            onClick={() => toast.info("Pengaturan ruang kerja akan segera hadir")}
             className="mt-5 flex w-full items-center gap-3 rounded-sm px-3 py-2 text-sm text-[#6B5A4E] hover:bg-[#FFFDF8] hover:text-[#2A1E17]"
           >
             <Settings2 size={17} />
-            Settings
+            Pengaturan
           </button>
         </div>
       </aside>
@@ -444,7 +443,7 @@ export default function Home() {
               <Menu size={18} />
             </button>
             <div className="hidden items-center gap-2 font-mono text-[10px] uppercase tracking-widest text-[#948275] sm:flex">
-              <span data-testid="breadcrumb-workspace">Workspace</span>
+              <span data-testid="breadcrumb-workspace">Ruang Kerja</span>
               <span>/</span>
               <span data-testid="breadcrumb-section" className="text-[#2A1E17]">
                 {navItems.find((item) => item.id === section)?.label}
@@ -458,14 +457,14 @@ export default function Home() {
               className="hidden items-center gap-2 rounded-full border border-[#E5DFD5] bg-[#FFFDF8] px-3 py-2 font-mono text-[10px] uppercase tracking-wider text-[#948275] transition hover:border-[#FF5722] sm:flex"
             >
               <Search size={14} />
-              Search content <span className="ml-4 rounded bg-[#F2ECE1] px-1.5 py-0.5">⌘K</span>
+              Cari konten <span className="ml-4 rounded bg-[#F2ECE1] px-1.5 py-0.5">⌘K</span>
             </button>
             <button
               data-testid="header-create-content-button"
               onClick={() => openCreate()}
               className="flex items-center gap-2 rounded-full bg-[#FF5722] px-3 py-2 text-xs font-bold text-white shadow-[2px_2px_0_#2A1E17] transition-transform hover:-translate-y-0.5"
             >
-              <Plus size={15} /> <span className="hidden sm:inline">New content</span>
+              <Plus size={15} /> <span className="hidden sm:inline">Konten Baru</span>
             </button>
             <div
               data-testid="user-avatar"
@@ -583,30 +582,30 @@ function Overview({
     dashboard?.upcoming ?? contents.filter((item) => item.scheduled_date).slice(0, 4);
   const stats = [
     {
-      label: "Published",
+      label: "Diterbitkan",
       value: dashboard?.published ?? 0,
-      detail: "this cycle",
+      detail: "siklus ini",
       accent: "#15803D",
       icon: CheckCircle2,
     },
     {
-      label: "Scheduled",
+      label: "Dijadwalkan",
       value: dashboard?.scheduled ?? 0,
-      detail: "up next",
+      detail: "berikutnya",
       accent: "#1E40AF",
       icon: CalendarDays,
     },
     {
-      label: "Needs review",
+      label: "Perlu Review",
       value: dashboard?.in_review ?? 0,
-      detail: "awaiting team",
+      detail: "menunggu tim",
       accent: "#D97706",
       icon: ClipboardList,
     },
     {
-      label: "Media assets",
+      label: "Aset Media",
       value: dashboard?.media_assets ?? 0,
-      detail: "linked files",
+      detail: "berkas tertaut",
       accent: "#FF5722",
       icon: FolderOpen,
     },
@@ -630,22 +629,21 @@ function Overview({
             data-testid="overview-eyebrow"
             className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF5722]"
           >
-            Friday, studio notes · 09:42
+            Catatan Studio · Manajemen Konten
           </p>
           <h1
             data-testid="overview-heading"
             className="mt-3 max-w-3xl font-heading text-4xl font-black uppercase leading-[0.95] tracking-[-0.07em] sm:text-5xl lg:text-6xl"
           >
-            Make space for
+            Beri ruang untuk
             <br />
-            <span className="text-[#FF5722]">good ideas.</span>
+            <span className="text-[#FF5722]">ide-ide hebat.</span>
           </h1>
           <p
             data-testid="overview-description"
             className="mt-5 max-w-lg text-sm leading-7 text-[#6B5A4E]"
           >
-            A calm place to plan the next story, keep the team moving, and turn everyday work into
-            something worth sharing.
+            Ruang terpadu untuk merencanakan cerita berikutnya, menjaga ritme tim, dan mengubah karya harian menjadi konten berharga.
           </p>
         </div>
         <div className="relative mt-7 flex flex-wrap gap-3">
@@ -655,7 +653,7 @@ function Overview({
             className="h-10 rounded-full bg-[#2A1E17] px-5 text-xs font-bold text-white hover:bg-[#FF5722]"
           >
             <Plus size={15} />
-            Create content
+            Buat Konten
           </Button>
           <Button
             data-testid="overview-calendar-button"
@@ -664,7 +662,7 @@ function Overview({
             className="h-10 rounded-full border-[#D8CFC1] bg-transparent px-5 text-xs font-bold text-[#2A1E17]"
           >
             <CalendarDays size={15} />
-            Open calendar
+            Buka Kalender
           </Button>
         </div>
       </section>
@@ -793,9 +791,7 @@ function Overview({
                 <h2
                   data-testid="templates-heading"
                   className="mt-2 font-heading text-2xl font-black uppercase leading-none tracking-[-0.05em]"
-                >
-                  Starter templates
-                </h2>
+                >Templat Awal</h2>
               </div>
               <Sparkles data-testid="templates-icon" className="text-[#FF5722]" />
             </div>
@@ -803,13 +799,13 @@ function Overview({
               data-testid="templates-description"
               className="mt-4 text-sm leading-6 text-[#D8CFC1]"
             >
-              A few thoughtful starting points, for the days when the blank page feels too loud.
+              Pilihan awal yang dirancang untuk memulai saat Anda membutuhkan inspirasi.
             </p>
             <div className="mt-6 space-y-2">
               {[
-                { name: "Weekly education", pillar: "Edukasi", platform: "Instagram Carousel" },
-                { name: "Product launch", pillar: "Promosi", platform: "IG + TikTok" },
-                { name: "Founder notes", pillar: "Soft Sell", platform: "LinkedIn" },
+                { name: "Edukasi Mingguan", pillar: "Edukasi", platform: "Instagram Carousel" },
+                { name: "Peluncuran Produk", pillar: "Promosi", platform: "IG + TikTok" },
+                { name: "Catatan Pendiri", pillar: "Soft Sell", platform: "LinkedIn" },
               ].map((template) => (
                 <button
                   data-testid={`template-${template.pillar.toLowerCase().replaceAll(" ", "-")}-button`}
@@ -818,7 +814,7 @@ function Overview({
                     onCreate({
                       title: template.name,
                       pillar: template.pillar,
-                      description: `A ${template.name.toLowerCase()} story for this week's plan.`,
+                      description: `Rencana konten ${template.name.toLowerCase()} untuk minggu ini.`,
                     })
                   }
                   className="flex w-full items-center justify-between border-b border-white/15 py-3 text-left text-sm transition hover:pl-2"
@@ -887,17 +883,15 @@ function ContentPlan({
           <p
             data-testid="content-eyebrow"
             className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF5722]"
-          >
-            The working table
-          </p>
+          >Meja Kerja</p>
           <h1
             data-testid="content-heading"
             className="mt-2 font-heading text-4xl font-black uppercase tracking-[-0.07em]"
           >
-            Content plan<span className="text-[#FF5722]">.</span>
+            Rencana Konten<span className="text-[#FF5722]">.</span>
           </h1>
           <p data-testid="content-description" className="mt-2 text-sm text-[#6B5A4E]">
-            Every idea has a place to land, move, and become real.
+            Setiap ide memiliki ruang untuk bertumbuh dan diwujudkan.
           </p>
         </div>
         <Button
@@ -906,7 +900,7 @@ function ContentPlan({
           className="rounded-full bg-[#FF5722] font-bold text-white hover:bg-[#E64A19]"
         >
           <Plus size={16} />
-          New content
+          Konten Baru
         </Button>
       </div>
       <div
@@ -919,7 +913,7 @@ function ContentPlan({
             data-testid="content-search-input"
             value={search}
             onChange={(event) => setSearch(event.target.value)}
-            placeholder="Search titles, captions, ideas..."
+            placeholder="Cari judul, takarir, ide..."
             className="h-9 border-0 bg-[#F7F1E7] pl-9 text-sm focus-visible:ring-1 focus-visible:ring-[#FF5722]"
           />
         </div>
@@ -929,7 +923,7 @@ function ContentPlan({
           onChange={(event) => setStatusFilter(event.target.value)}
           className="h-9 rounded-lg border border-[#E5DFD5] bg-[#F7F1E7] px-3 font-mono text-[10px] uppercase tracking-wider outline-none focus:border-[#FF5722]"
         >
-          <option value="all">All statuses</option>
+          <option value="all">Semua Status</option>
           {Object.entries(statusLabels).map(([value, label]) => (
             <option key={value} value={value}>
               {label}
@@ -942,7 +936,7 @@ function ContentPlan({
           onChange={(event) => setPillarFilter(event.target.value)}
           className="h-9 rounded-lg border border-[#E5DFD5] bg-[#F7F1E7] px-3 font-mono text-[10px] uppercase tracking-wider outline-none focus:border-[#FF5722]"
         >
-          <option value="all">All pillars</option>
+          <option value="all">Semua Pilar</option>
           {pillars.map((pillar) => (
             <option key={pillar} value={pillar}>
               {pillar}
@@ -968,11 +962,11 @@ function ContentPlan({
         className="overflow-hidden rounded-sm border-[#E5DFD5] bg-[#FFFDF8] shadow-[0_4px_20px_rgba(42,30,23,0.04)]"
       >
         <div className="hidden grid-cols-[1.8fr_1fr_1.2fr_1fr_80px] gap-4 border-b border-[#E5DFD5] bg-[#F7F1E7] px-5 py-3 font-mono text-[10px] uppercase tracking-[0.14em] text-[#948275] md:grid">
-          <span data-testid="table-header-content">Content</span>
-          <span data-testid="table-header-pillar">Pillar</span>
+          <span data-testid="table-header-content">Konten</span>
+          <span data-testid="table-header-pillar">Pilar</span>
           <span data-testid="table-header-platform">Platform</span>
           <span data-testid="table-header-status">Status</span>
-          <span data-testid="table-header-actions">Action</span>
+          <span data-testid="table-header-actions">Aksi</span>
         </div>
         {contents.length ? (
           contents.map((content) => (
@@ -1084,17 +1078,15 @@ function CalendarView({
           <p
             data-testid="calendar-eyebrow"
             className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF5722]"
-          >
-            The rhythm of work
-          </p>
+          >Ritme Publikasi</p>
           <h1
             data-testid="calendar-heading"
             className="mt-2 font-heading text-4xl font-black uppercase tracking-[-0.07em]"
           >
-            Editorial calendar<span className="text-[#FF5722]">.</span>
+            Kalender Editorial<span className="text-[#FF5722]">.</span>
           </h1>
           <p data-testid="calendar-description" className="mt-2 text-sm text-[#6B5A4E]">
-            Drag a story to a new day. Good timing is part of the craft.
+            Tarik dan letakkan konten ke hari yang diinginkan. Waktu tayang yang tepat adalah kunci keterlibatan.
           </p>
         </div>
         <Button
@@ -1103,7 +1095,7 @@ function CalendarView({
           className="rounded-full bg-[#2A1E17] font-bold text-white hover:bg-[#FF5722]"
         >
           <Plus size={16} />
-          Schedule content
+          Jadwalkan Konten
         </Button>
       </div>
       <Card
@@ -1125,7 +1117,7 @@ function CalendarView({
               data-testid="calendar-month-label"
               className="min-w-36 text-center font-heading text-xl font-bold tracking-[-0.04em]"
             >
-              {monthCursor.toLocaleDateString("en-US", { month: "long", year: "numeric" })}
+              {monthCursor.toLocaleDateString("id-ID", { month: "long", year: "numeric" })}
             </h2>
             <button
               data-testid="calendar-next-month-button"
@@ -1141,14 +1133,12 @@ function CalendarView({
             <span
               data-testid="calendar-drag-hint"
               className="font-mono text-[10px] uppercase tracking-wider text-[#948275]"
-            >
-              Drag & drop enabled
-            </span>
+            >Dukungan seret & lepas aktif</span>
             <Grid2X2 size={15} className="text-[#FF5722]" />
           </div>
         </div>
         <div className="grid grid-cols-7 border-b border-[#E5DFD5] bg-[#F7F1E7]">
-          {["Mon", "Tue", "Wed", "Thu", "Fri", "Sat", "Sun"].map((day) => (
+          {["Sen", "Sel", "Rab", "Kam", "Jum", "Sab", "Min"].map((day) => (
             <div
               data-testid={`calendar-weekday-${day.toLowerCase()}`}
               key={day}
@@ -1260,17 +1250,15 @@ function MediaLibrary({
           <p
             data-testid="media-eyebrow"
             className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF5722]"
-          >
-            The visual shelf
-          </p>
+          >Penyimpanan Visual</p>
           <h1
             data-testid="media-heading"
             className="mt-2 font-heading text-4xl font-black uppercase tracking-[-0.07em]"
           >
-            Media library<span className="text-[#FF5722]">.</span>
+            Pustaka Media<span className="text-[#FF5722]">.</span>
           </h1>
           <p data-testid="media-description" className="mt-2 text-sm text-[#6B5A4E]">
-            Keep links to the work close, wherever the files live.
+            Simpan tautan ke berkas kerja Anda dengan rapi dan mudah diakses.
           </p>
         </div>
         <Button
@@ -1279,7 +1267,7 @@ function MediaLibrary({
           className="rounded-full bg-[#FF5722] font-bold text-white hover:bg-[#E64A19]"
         >
           <Plus size={16} />
-          Add asset link
+          Tambah Tautan Aset
         </Button>
       </div>
       <div className="relative max-w-md">
@@ -1288,7 +1276,7 @@ function MediaLibrary({
           data-testid="media-search-input"
           value={filter}
           onChange={(event) => setFilter(event.target.value)}
-          placeholder="Search your visual shelf..."
+          placeholder="Cari tautan aset Anda..."
           className="h-10 border-[#E5DFD5] bg-[#FFFDF8] pl-9"
         />
       </div>
@@ -1440,7 +1428,7 @@ function AssetForm({
           data-testid="asset-title-input"
           value={assetForm.title}
           onChange={(event) => setAssetForm({ ...assetForm, title: event.target.value })}
-          placeholder="Asset title"
+          placeholder="Nama / Judul Aset"
         />
         <Input
           data-testid="asset-url-input"
@@ -1472,7 +1460,7 @@ function AssetForm({
           data-testid="asset-notes-input"
           value={assetForm.notes}
           onChange={(event) => setAssetForm({ ...assetForm, notes: event.target.value })}
-          placeholder="Notes for the team"
+          placeholder="Catatan untuk tim"
           className="min-h-20 bg-white md:col-span-2"
         />
       </div>
@@ -1483,9 +1471,7 @@ function AssetForm({
         >
           Provider sync is MOCKED
         </span>
-        <Button data-testid="asset-cancel-button" onClick={onClose} variant="ghost">
-          Cancel
-        </Button>
+        <Button data-testid="asset-cancel-button" onClick={onClose} variant="ghost">Batal</Button>
         <Button
           data-testid="asset-save-button"
           onClick={onAdd}
@@ -1520,37 +1506,35 @@ function Analytics({
         <p
           data-testid="analytics-eyebrow"
           className="font-mono text-[10px] uppercase tracking-[0.28em] text-[#FF5722]"
-        >
-          The quiet numbers
-        </p>
+        >Statistik & Performa</p>
         <h1
           data-testid="analytics-heading"
           className="mt-2 font-heading text-4xl font-black uppercase tracking-[-0.07em]"
         >
-          Content pulse<span className="text-[#FF5722]">.</span>
+          Denyut Konten<span className="text-[#FF5722]">.</span>
         </h1>
         <p data-testid="analytics-description" className="mt-2 text-sm text-[#6B5A4E]">
-          A simple read on what is moving, resonating, and waiting for a little care.
+          Ringkasan performa konten: topik yang diminati, interaksi tertinggi, dan peluang evaluasi.
         </p>
       </div>
       <div className="grid gap-4 md:grid-cols-3">
         <AnalyticsMetric
           data-testid="analytics-views-metric"
-          label="Tracked views"
+          label="Total Tayangan"
           value={totalViews.toLocaleString()}
-          detail="from published posts"
+          detail="dari konten yang tayang"
         />
         <AnalyticsMetric
           data-testid="analytics-likes-metric"
-          label="Reactions"
+          label="Total Suka"
           value={totalLikes.toLocaleString()}
-          detail="likes on published posts"
+          detail="suka pada konten tayang"
         />
         <AnalyticsMetric
           data-testid="analytics-pillar-metric"
-          label="Top pillar"
+          label="Pilar Terpopuler"
           value={published[0]?.pillar ?? "—"}
-          detail="based on your current log"
+          detail="berdasarkan riwayat konten"
         />
       </div>
       <div className="grid gap-6 xl:grid-cols-[1fr_1.1fr]">
@@ -1562,12 +1546,8 @@ function Analytics({
             <p
               data-testid="workflow-eyebrow"
               className="font-mono text-[10px] uppercase tracking-wider text-[#FF5722]"
-            >
-              Workflow health
-            </p>
-            <CardTitle data-testid="workflow-heading" className="font-heading text-xl">
-              Where ideas are today
-            </CardTitle>
+            >Kesehatan Alur Kerja</p>
+            <CardTitle data-testid="workflow-heading" className="font-heading text-xl">Distribusi Status Ide</CardTitle>
           </CardHeader>
           <CardContent className="space-y-4">
             {(dashboard?.content_by_status ?? []).map((item) => (
@@ -1771,11 +1751,9 @@ function ContentDrawer({
             <p
               data-testid="drawer-eyebrow"
               className="font-mono text-[10px] uppercase tracking-wider text-[#FF5722]"
-            >
-              Content detail
-            </p>
+            >Detail Konten</p>
             <p data-testid="drawer-content-id" className="mt-1 font-mono text-[9px] text-[#948275]">
-              {content.id.slice(0, 8)} / live record
+              {content.id.slice(0, 8)} / data aktif
             </p>
           </div>
           <button
@@ -1870,9 +1848,7 @@ function ContentDrawer({
               onClick={onEdit}
               className="bg-[#2A1E17] text-white hover:bg-[#FF5722]"
             >
-              <PenLine size={15} />
-              Edit content
-            </Button>
+              <PenLine size={15} />Edit Konten</Button>
             <Button
               data-testid="drawer-approve-button"
               onClick={() => onStatus(content.status === "published" ? "idea" : "published")}
@@ -1939,7 +1915,7 @@ function ContentDrawer({
                   onKeyDown={(event) => {
                     if (event.key === "Enter") onComment();
                   }}
-                  placeholder="Leave a note for the team..."
+                  placeholder="Tulis catatan atau masukan untuk tim..."
                   className="bg-white"
                 />
                 <Button
@@ -2001,13 +1977,13 @@ function EditorModal({
               data-testid="editor-eyebrow"
               className="font-mono text-[10px] uppercase tracking-wider text-[#FF5722]"
             >
-              {editingId ? "Refine the story" : "A new story begins"}
+              {editingId ? "Sempurnakan Konten" : "Mulai Ide Konten Baru"}
             </p>
             <h2
               data-testid="editor-heading"
               className="mt-1 font-heading text-2xl font-black tracking-[-0.05em]"
             >
-              {editingId ? "Edit content" : "Create content"}
+              {editingId ? "Edit Konten" : "Buat Konten"}
             </h2>
           </div>
           <button
@@ -2094,9 +2070,7 @@ function EditorModal({
                   data-testid="content-cta-label"
                   htmlFor="content-cta"
                   className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B5A4E]"
-                >
-                  Call to action
-                </label>
+                >Ajakan Bertindak (CTA)</label>
                 <Input
                   data-testid="content-cta-input"
                   id="content-cta"
@@ -2114,9 +2088,7 @@ function EditorModal({
                 data-testid="content-pillar-label"
                 htmlFor="content-pillar"
                 className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B5A4E]"
-              >
-                Content pillar
-              </label>
+              >Pilar Konten</label>
               <select
                 data-testid="content-pillar-select"
                 id="content-pillar"
@@ -2134,9 +2106,7 @@ function EditorModal({
                 data-testid="content-status-label"
                 htmlFor="content-status"
                 className="mb-2 block font-mono text-[10px] font-bold uppercase tracking-wider text-[#6B5A4E]"
-              >
-                Workflow status
-              </label>
+              >Status Alur Kerja</label>
               <select
                 data-testid="content-status-select"
                 id="content-status"
@@ -2247,9 +2217,7 @@ function EditorModal({
             Fields marked by your workflow
           </span>
           <div className="flex gap-2">
-            <Button data-testid="editor-cancel-button" onClick={onClose} variant="ghost">
-              Cancel
-            </Button>
+            <Button data-testid="editor-cancel-button" onClick={onClose} variant="ghost">Batal</Button>
             <Button
               data-testid="editor-save-button"
               onClick={onSave}
@@ -2257,7 +2225,7 @@ function EditorModal({
               className="bg-[#FF5722] font-bold text-white hover:bg-[#E64A19]"
             >
               <Check size={16} />
-              {editingId ? "Save changes" : "Add to plan"}
+              {editingId ? "Simpan Perubahan" : "Tambahkan ke Rencana"}
             </Button>
           </div>
         </div>
