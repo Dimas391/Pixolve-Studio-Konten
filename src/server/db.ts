@@ -9,7 +9,13 @@ import type {
 } from "../lib/types";
 
 export const db = createClient({
-  url: process.env["DATABASE_URL"] || "file:pixolve.db",
+  url:
+    process.env["DATABASE_URL"] ||
+    "libsql://manajemen-konten-pixolve.aws-ap-southeast-1.turso.io",
+  authToken:
+    process.env["DATABASE_AUTH_TOKEN"] ||
+    process.env["TURSO_AUTH_TOKEN"] ||
+    "eyJhbGciOiJFZERTQSIsInR5cCI6IkpXVCJ9.eyJhIjoicnciLCJpYXQiOjE3OTMxOTc0MTksImlkIjoiMDFhMTgyZTQtYzIwMS03Mjc5LTlmZmUtN2U4MjAwZDA5ODZlIiwia2lkIjoiVUxGQUMxODRHR0MyeEVzREQ0UU04X25DRS11WFdxYU9NUlkzeHhPc202byIsInJpZCI6ImQwZDY2NDIzLWY2ZDktNDFiZC1hNWI5LTU4NTM0NmNlNDQ4NiJ9.CEIsQrB5NbEAnzNvH15cmtyxu79ftKphW4JulaLr6enK2eRHY9rTuFgEXWg1-kiNxR_Jttd0dJxyU7TKHzQICw",
 });
 
 let dbInitialized = false;
